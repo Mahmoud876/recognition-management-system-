@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            color: #333333;
+            background-color: #F5F5F5;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #FFFFFF;
+            border-right: 1px solid #E5E5E5;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            color: #A78BFA;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar h1 img {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333333;
+            font-size: 1rem;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .menu a:hover {
+            background: #A78BFA;
+            color: #FFFFFF;
+        }
+
+        .menu a i {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .main-header h2 {
+            font-size: 1.8rem;
+            color: #333333;
+        }
+
+        .search-bar {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #E5E5E5;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #A78BFA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #936EDE;
+        }
+
+        .areas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .areas-container button {
+            background-color: #A78BFA;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .areas-container button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(51, 184, 163, 0.6);
+        }
+
+        .users-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .users-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-container th, .users-container td {
+            border: 1px solid #E5E5E5;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .users-container th {
+            background: #F5F5F5;
+        }
+
+        .users-container button {
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .users-container button:hover {
+            background: #E05353;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .sidebar {
+            background-color: #1E1E1E;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .menu a {
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .menu a:hover {
+            background: #A78BFA;
+            color: #FFFFFF;
+        }
+
+        body.dark-mode .main-header h2 {
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .search-bar input {
+            background-color: #2E2E2E;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .areas-container button {
+            background-color: #333333;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .users-container {
+            background-color: #1E1E1E;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .users-container th {
+            background-color: #2E2E2E;
+        }
+
+        body.dark-mode .users-container button {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: #e5e5e5;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .toggle-checkbox {
+            display: none;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 5px;
+            border-radius: 15px;
+            background-color: #333;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-label::before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #333;
+        }
+
+        .toggle-checkbox:checked + .toggle-label::before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1><img src="C:/regonation face/logo.png" alt="Logo"> Mira Management</h1>
+        <div class="menu">
+            <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="verify_user.html"><i class="fas fa-user-plus"></i> Verify User</a>
+            <a href="users.html"><i class="fas fa-users"></i> Users</a>
+            <a href="monitor.html"><i class="fas fa-desktop"></i> Monitor Computers</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="main-header">
+            <h2>Users Management</h2>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" class="toggle-checkbox">
+                <label for="theme-switch" class="toggle-label">
+                    <span class="toggle-icon sun">☀️</span>
+                    <span class="toggle-icon moon">🌙</span>
+                </label>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-bar" placeholder="Search for users...">
+            <button onclick="searchUser()">Search</button>
+        </div>
+        <div class="areas-container" id="areas-container"></div>
+        <div class="users-container" id="users-container">
+            <h3>Users in Selected Area</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <!-- Dynamic User Rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // Example Data for Areas and Users
+        const data = {
+            areas: [
+                { id: 1, name: "Area 1", users: [{ id: 101, name: "Alice" }, { id: 102, name: "Bob" }] },
+                { id: 2, name: "Area 2", users: [{ id: 201, name: "Charlie" }, { id: 202, name: "David" }] }
+            ]
+        };
+
+        const areasContainer = document.getElementById("areas-container");
+        const usersTableBody = document.getElementById("users-table-body");
+
+        // Populate Areas
+        data.areas.forEach(area => {
+            const button = document.createElement("button");
+            button.textContent = area.name;
+            button.addEventListener("click", () => showUsers(area.id));
+            areasContainer.appendChild(button);
+        });
+
+        // Show Users in Selected Area
+        function showUsers(areaId) {
+            const area = data.areas.find(a => a.id === areaId);
+            usersTableBody.innerHTML = "";
+            area.users.forEach(user => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td><button onclick="removeUser(${areaId}, ${user.id})">Remove</button></td>
+                `;
+                usersTableBody.appendChild(row);
+            });
+        }
+
+        // Search User
+        function searchUser() {
+            const query = document.getElementById("search-bar").value.toLowerCase();
+            usersTableBody.innerHTML = ""; // Clear previous results
+            data.areas.forEach(area => {
+                area.users.forEach(user => {
+                    if (user.name.toLowerCase().includes(query)) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td><button onclick="removeUser(${area.id}, ${user.id})">Remove</button></td>
+                        `;
+                        usersTableBody.appendChild(row);
+                    }
+                });
+            });
+        }
+
+        // Remove User (Mock Functionality)
+        function removeUser(areaId, userId) {
+            const area = data.areas.find(a => a.id === areaId);
+            area.users = area.users.filter(user => user.id !== userId);
+            showUsers(areaId);
+            alert(`User with ID ${userId} removed from Area ${areaId}`);
+        }
+
+        // Persistent Dark Mode
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            if (savedTheme === "dark") {
+                document.body.classList.add("dark-mode");
+                document.getElementById("theme-switch").checked = true;
+            } else {
+                document.body.classList.remove("dark-mode");
+                document.getElementById("theme-switch").checked = false;
+            }
+        }
+        applySavedTheme();
+
+        document.getElementById("theme-switch").addEventListener("change", () => {
+            if (document.getElementById("theme-switch").checked) {
+                document.body.classList.add("dark-mode");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.body.classList.remove("dark-mode");
+                localStorage.setItem("theme", "light");
+            }
+        });
+    </script>
+</body>
+</html>
