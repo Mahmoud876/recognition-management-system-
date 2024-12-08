@@ -1,0 +1,238 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: #333333;
+    background-color: #F5F5F5;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #FFFFFF;
+    border-right: 1px solid #E5E5E5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar h1 {
+    font-size: 1.5rem;
+    color: #A78BFA;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar h1 img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu a:hover {
+    background: #A78BFA;
+    color: #FFFFFF;
+}
+
+.menu a i {
+    font-size: 1.2rem;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main-header h2 {
+    font-size: 1.8rem;
+    color: #333333;
+}
+
+.requests-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.request-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+}
+
+.request-card:hover {
+    transform: translateY(-5px);
+}
+
+.request-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.request-card h3 {
+    font-size: 1.2rem;
+    color: #333333;
+}
+
+.request-card p {
+    font-size: 0.9rem;
+    color: #666666;
+}
+
+.request-card button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.accept-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.accept-btn:hover {
+    background: #45A049;
+}
+
+.reject-btn {
+    background: #F44336;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #D32F2F;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #121212;
+    color: #e5e5e5;
+}
+
+body.dark-mode .sidebar {
+    background-color: #1E1E1E;
+    color: #e5e5e5;
+}
+
+body.dark-mode .menu a {
+    color: #e5e5e5;
+}
+
+body.dark-mode .menu a:hover {
+    background: #A78BFA;
+    color: #FFFFFF;
+}
+
+body.dark-mode .main-header h2 {
+    color: #e5e5e5;
+}
+
+body.dark-mode .request-card {
+    background: #1E1E1E;
+    border-color: #444;
+    color: #e5e5e5;
+}
+
+/* Dark Mode Toggle */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: #e5e5e5;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 5px;
+    border-radius: 15px;
+    background-color: #333;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-label::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.toggle-checkbox:checked + .toggle-label::before {
+    transform: translateX(30px);
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #1E1E1E;
+}
